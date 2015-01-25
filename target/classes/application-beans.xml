@@ -1,0 +1,30 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:rabbit="http://www.springframework.org/schema/rabbit" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+    http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd
+    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
+    http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit-1.3.xsd" 
+    >
+    
+    <bean id="conversionService" name="applicationConversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+		<property name="converters">
+			<list>
+				<bean class="edu.utad.api.converter.SeatDTOtoSeatConverter" />
+				<bean class="edu.utad.api.converter.SeatToSeatDTOConverter" />
+				<bean class="edu.utad.api.converter.SeatListToSeatDTOListConverter" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="AWSLambdaAsyncClientConnector" class="edu.utad.api.amazon.connector.AWSLambdaAsyncClientConnector">
+	    <constructor-arg value="${accessKey}" />
+		<constructor-arg value="${secretKey}" />
+	</bean>
+	
+	<bean id="AWSDynamoDBClientConnector" class="edu.utad.api.amazon.connector.AWSDynamoDBClientConnector">
+	    <constructor-arg value="${accessKey}" />
+		<constructor-arg value="${secretKey}" />
+	</bean>
+	
+</beans>
